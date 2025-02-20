@@ -244,17 +244,19 @@ SNAKE.Snake =
         blockPool[blockPool.length] = tempBlock;
       }
 
-      function recordScore() {
-        const highScore = localStorage[HIGH_SCORE_KEY];
-        if (me.snakeLength > highScore) {
-          alert(
-            "Congratulations! You have beaten your previous high score, which was " +
-              highScore +
-              ".",
-          );
-          localStorage.setItem(HIGH_SCORE_KEY, me.snakeLength);
+  function recordScore() {
+    const highScore = localStorage[HIGH_SCORE_KEY] || 0; // Ensure highScore is defined
+    if (me.snakeLength > highScore) {
+        // Update the UI instead of using alert
+        const messageBox = document.getElementById("score-message");
+        if (messageBox) {
+            messageBox.textContent = `Congratulations! You have beaten your previous high score, which was ${highScore}.`;
+            messageBox.style.display = "block"; // Make sure the message is visible
         }
-      }
+        localStorage.setItem(HIGH_SCORE_KEY, me.snakeLength);
+    }
+}
+
 
       function handleEndCondition(handleFunc) {
         recordScore();
